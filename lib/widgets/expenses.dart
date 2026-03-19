@@ -65,7 +65,7 @@ class _ExpensesState extends State<Expenses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Expense Tracker"),
+        title: const Text("My Expense Tracker"),
         actions: [
           IconButton(
               onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add))

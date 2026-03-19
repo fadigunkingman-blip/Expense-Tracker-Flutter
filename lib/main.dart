@@ -17,7 +17,7 @@ void main() {
         appBarTheme: AppBarTheme(
             backgroundColor: kColorScheme.onPrimaryContainer,
             foregroundColor: kColorScheme.primaryContainer),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: kColorScheme.secondaryContainer,
           margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
         ),
