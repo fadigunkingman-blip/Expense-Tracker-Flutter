@@ -7,6 +7,8 @@ final formatter = DateFormat.yMd();
 
 enum Category { food, travel, leisure, work }
 
+enum EntryType { expense, income }
+
 const CategoryIcons = {
   Category.food: Icons.lunch_dining,
   Category.travel: Icons.flight_takeoff,
@@ -20,6 +22,7 @@ class Expense {
     required this.amount,
     required this.date,
     required this.category,
+    this.type = EntryType.expense,
   }) : id = uuid.v4();
 
   final String id;
@@ -27,29 +30,34 @@ class Expense {
   final double amount;
   final DateTime date;
   final Category category;
+  final EntryType type;
+
+  bool get isIncome => type == EntryType.income;
 
   String get formattedDate {
     return formatter.format(date);
   }
 
-  // Convert Expense to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
       'amount': amount,
       'date': date.toIso8601String(),
-      'category': category.index, // Save category as index
+      'category': category.index,
+      'type': type.index,
     };
   }
 
-  // Create Expense from JSON
   factory Expense.fromJson(Map<String, dynamic> json) {
     return Expense(
       title: json['title'],
       amount: json['amount'],
       date: DateTime.parse(json['date']),
-      category: Category.values[json['category']], // Get category from index
+      category: Category.values[json['category']],
+      type: json['type'] != null
+          ? EntryType.values[json['type']]
+          : EntryType.expense,
     );
   }
 }
@@ -62,7 +70,7 @@ class ExpenseBucket {
 
   ExpenseBucket.forCategory(List<Expense> allExpense, this.category)
       : expenses = allExpense
-            .where((expense) => expense.category == category)
+            .where((e) => e.category == category && !e.isIncome)
             .toList();
 
   double get totalExpenses {

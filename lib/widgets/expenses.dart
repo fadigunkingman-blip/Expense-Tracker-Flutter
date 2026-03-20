@@ -1,3 +1,4 @@
+import 'package:expense_app/main.dart';
 import 'package:expense_app/widgets/chart/chart.dart';
 import 'package:expense_app/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_app/models/expense.dart';
@@ -16,6 +17,18 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
+        title: "Monthly Salary",
+        amount: 3500,
+        date: DateTime.now(),
+        category: Category.work,
+        type: EntryType.income),
+    Expense(
+        title: "Freelance Project",
+        amount: 850,
+        date: DateTime.now(),
+        category: Category.work,
+        type: EntryType.income),
+    Expense(
         title: "Flutter Course",
         amount: 19.99,
         date: DateTime.now(),
@@ -25,6 +38,11 @@ class _ExpensesState extends State<Expenses> {
         amount: 10.99,
         date: DateTime.now(),
         category: Category.leisure),
+    Expense(
+        title: "Groceries",
+        amount: 84.50,
+        date: DateTime.now(),
+        category: Category.food),
   ];
 
   void addExpense(Expense expenseData) {
@@ -66,10 +84,13 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Expense Tracker"),
-        actions: [
-          IconButton(
-              onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add))
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _openAddExpenseOverlay,
+        backgroundColor: kPrimaryGreen,
+        foregroundColor: Colors.white,
+        elevation: 4,
+        child: const Icon(Icons.add, size: 28),
       ),
       body: Column(
         children: [
